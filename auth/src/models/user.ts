@@ -30,8 +30,17 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String,
         required: true
-    }
-})
+        }
+    }, {
+        toJSON: {
+            transform(doc, ret) {
+                ret.id = ret._id
+                delete ret._id
+                delete ret.password
+                delete ret.__v
+            }
+        }
+    })
 
 // Call done in the end, we don't use arrow function, we are using 'this'
 // pre-save hook runs before a document is saved to the database
