@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Password } from "../services/password";
 
 // An interface that describes the properties 
 // that are required for creating a new User
@@ -30,6 +31,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     }
+})
+
+// Call done in the end, we don't use arrow function, we are using 'this'
+// pre-save hook runs before a document is saved to the database
+userSchema.pre('save', async function(done) {
+    // Hash the password ONLY if it was modified
+    if (this.isModified('password')) {
+        const hashed = await Password.toHash(this.get('password'))
+        this.set('password', hashed)
+    }
+    done()
 })
 
 userSchema.statics.build = (attrs: UserAttrs) => {
