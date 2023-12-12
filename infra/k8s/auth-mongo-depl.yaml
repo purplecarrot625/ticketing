@@ -9,7 +9,8 @@ spec:
       app: auth-mongo
   template:
     metadata:
-      app: auth-mongo
+      labels:
+        app: auth-mongo
     spec:
       containers:
         - name: auth-mongo

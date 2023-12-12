@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator'
 import { RequestValidationError } from '../errors/request-valdation-error';
 import { User } from '../models/user';
+import { BadRequestError } from '../errors/bad-request-errors';
+import jwt from 'jsonwebtoken'
 
 const router = express.Router();
 
@@ -26,14 +28,25 @@ router.post('/api/users/signup', [
     const existingUser = await User.findOne({ email: email })
     
     if(existingUser) {
-        console.log('Email in use')
-        return res.send({})
+        throw new BadRequestError('Email in use')
     }
 
     // Create the user and save it to the database
     const user = User.build({ email: email, password: password })
     await user.save()
 
+    // Generate JSON WEB TOKEN
+    const userJWT = jwt.sign({
+        id: user.id,
+        email: user.email
+    }, 
+        process.env.JWT_KEY! // ! means we already check it in index.ts
+    ) // verify signature
+
+    // Store it on sesstion object
+    req.session = {
+        jwt: userJWT
+    } // 这只是因为要传递给JSON或提交给TypeScript的类型定义文件不希望我们假设req会话中实际存在一个对象｡
     res.status(201).send({ user })
 
     // Generate JWT
