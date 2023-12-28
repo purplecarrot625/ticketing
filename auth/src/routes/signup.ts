@@ -47,8 +47,6 @@ validateRequest,
     } // 这只是因为要传递给JSON或提交给TypeScript的类型定义文件不希望我们假设req会话中实际存在一个对象｡
     res.status(201).send({ user })
 
-    // Generate JWT
-
 })
 
 export { router as signupRouter }
