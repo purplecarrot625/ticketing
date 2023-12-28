@@ -1,13 +1,15 @@
 import express, { Request, Response } from 'express';
-import { body, validationResult } from 'express-validator'
-import { RequestValidationError } from '../errors/request-validation-error';
+import { body } from 'express-validator'
 import { User } from '../models/user';
 import { BadRequestError } from '../errors/bad-request-errors';
 import jwt from 'jsonwebtoken'
+import { validateRequest } from '../middlewares/validate-request';
 
 const router = express.Router();
 
-router.post('/api/users/signup', [
+router.post(
+    '/api/users/signup', 
+[
     body('email')
     .isEmail()
     .withMessage('Email must be valid'),
@@ -16,12 +18,8 @@ router.post('/api/users/signup', [
     .isLength({ min: 4, max: 20 })
     .withMessage('Password must between 4 and 20 characters')
 ],
+validateRequest,
  async (req: Request, res: Response) => {
-    const errors = validationResult(req)
-
-    if(!errors.isEmpty()) {
-       throw new RequestValidationError(errors.array())
-    }
 
     // If the user already exists
     const { email, password } = req.body
@@ -48,8 +46,6 @@ router.post('/api/users/signup', [
         jwt: userJWT
     } // 这只是因为要传递给JSON或提交给TypeScript的类型定义文件不希望我们假设req会话中实际存在一个对象｡
     res.status(201).send({ user })
-
-    // Generate JWT
 
 })
 

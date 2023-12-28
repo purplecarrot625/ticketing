@@ -4,7 +4,10 @@ const router = express.Router();
 
 router.get('/api/users/signout', (req, res) => {
 
-    res.send('Hi there!')
+    // Empty the info in cookies => destroy the session
+    req.session = null
+
+    res.send({})
 
 })
 
