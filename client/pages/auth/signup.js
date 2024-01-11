@@ -12,13 +12,13 @@ export default () => {
       email,
       password,
     },
-    onSuccess: ()=> Router.push('/') // onSuccess callback
+    onSuccess: () => Router.push("/"), // onSuccess callback 注册成功
   });
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    await doRequest();
+    await doRequest(); // 调用 doRequest
   };
 
   return (
@@ -41,7 +41,7 @@ export default () => {
           className="form-control"
         />
       </div>
-      {errors}
+      {errors} {/* 错误提示 */}
       <button className="btn btn-primary">Sign Up</button>
     </form>
   );

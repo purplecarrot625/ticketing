@@ -27,8 +27,13 @@ export default ({ url, method, body, onSuccess }) => {
       );
     }
   };
-
   return { doRequest, errors };
 };
 
+/*
+Returning doRequest allows any component that uses this hook to initiate the API request. 
+By calling doRequest, the component can trigger the API call whenever needed 
+(e.g., on a button click, form submission, etc.). 
+This provides flexibility and control to the component over when and how to make the request.
 
+**/
