@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import useRequest from "../../hooks/use-request";
+import Router from "next/router";
 
 export default () => {
   const [email, setEmail] = useState("");
@@ -12,12 +12,13 @@ export default () => {
       email,
       password,
     },
+    onSuccess: () => Router.push("/"), // onSuccess callback 注册成功
   });
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    doRequest();
+    await doRequest(); // 调用 doRequest
   };
 
   return (
@@ -40,7 +41,7 @@ export default () => {
           className="form-control"
         />
       </div>
-      {errors}
+      {errors} {/* 错误提示 */}
       <button className="btn btn-primary">Sign Up</button>
     </form>
   );
