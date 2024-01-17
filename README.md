@@ -7,3 +7,11 @@ Run `skaffold dev`
 # Check running pods
 
 `kubectl get pods`
+
+### Namespaces
+
+`kubectl get namespace`
+
+`kubectl get services`
+
+`kubectl get services -n ingress-ngix`
