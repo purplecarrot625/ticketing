@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator'
 import { User } from '../models/user';
-import { BadRequestError } from '../errors/bad-request-errors';
+import { BadRequestError } from '@purplecarrotnpm/common';
 import jwt from 'jsonwebtoken'
-import { validateRequest } from '../middlewares/validate-request';
+import { validateRequest } from '@purplecarrotnpm/common';
 
 const router = express.Router();
 
