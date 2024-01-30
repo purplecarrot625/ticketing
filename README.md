@@ -15,3 +15,6 @@ Run `skaffold dev`
 `kubectl get services`
 
 `kubectl get services -n ingress-ngix`
+
+`npm run pub`
+
