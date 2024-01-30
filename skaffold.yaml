@@ -25,18 +25,10 @@ build:
           - src: '**/*.js'
             dest: .
     - image: purplecarrotdocker/tickets
-<<<<<<< Updated upstream
       context: client
-=======
-      context: tickets
->>>>>>> Stashed changes
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-<<<<<<< Updated upstream
-          - src: '**/*.js'
-=======
           - src: 'src/**/*.ts'
->>>>>>> Stashed changes
             dest: .
